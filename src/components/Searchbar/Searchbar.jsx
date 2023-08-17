@@ -7,14 +7,14 @@ import css from "./Searchbar.module.css";
 
 export default function Searchbar({onSubmit}) {
   return (
-    <header className={css.searchbar}>
-      <form className={css.form}>
-        <button type="submit" className={css.button}>
-          <span className={css.buttonLabel}>Search</span>
+    <header className={css.searchBar}>
+      <form className={css.searchForm}>
+        <button type="submit" className={css.searchFormButton}>
+          <span className={css.searchFormButtonLabel}>Search</span>
         </button>
 
         <input
-          className={css.input}
+          className={css.searchFormInput}
           type="text"
           autocomplete="off"
           autofocus

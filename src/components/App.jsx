@@ -2,25 +2,16 @@
 import React, { Component } from "react";
 import axios from "axios";
 import ImageGallery from './ImageGallery/ImageGallery';
+import Searchbar from './Searchbar/Searchbar';
+import Button from './Button/Button';
 
 
-
-// export const App = () => {
-//   return (
-//     <div
-//       style={{
-//         height: '100vh',
-//         display: 'flex',
-//         justifyContent: 'center',
-//         alignItems: 'center',
-//         fontSize: 40,
-//         color: '#010101'
-//       }}
-//     >
-//      {/* <Searchbar onSubmit={onSubmit}/> */}
-//     </div>
-//   );
-// };
+const appStyles = {
+  display: 'grid',
+  gridTemplateColumns: '1fr',
+  gridGap: '16px',
+  paddingBottom: '24px'
+};
 
 export class App extends Component {
   state = {
@@ -35,8 +26,10 @@ export class App extends Component {
   render() {
     const { cards } = this.state;
     return (
-      <div>
+      <div style={appStyles}>
+        <Searchbar />
         {cards.length > 0 ? <ImageGallery cards={cards} /> : null}
+        <Button />
       </div>
     );
   }

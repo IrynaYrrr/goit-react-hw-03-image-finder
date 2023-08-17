@@ -1,7 +1,12 @@
-import React from 'react'
+import React from 'react';
+import css from './Modal.module.css';
 
 export default function Modal() {
   return (
-    <div>Modal</div>
+    <div className={css.overlay}>
+      <div className={css.modal}>
+        <img src="" alt="" />
+      </div>
+    </div>
   )
 }

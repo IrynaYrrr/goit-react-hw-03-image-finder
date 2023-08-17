@@ -1,9 +1,10 @@
-import ImageGalleryItem from 'components/ImageGalleryItem/ImageGalleryItem'
 import React from 'react'
+import ImageGalleryItem from 'components/ImageGalleryItem/ImageGalleryItem';
+import css from './ImageGallery.module.css';
 
 export default function ImageGallery({ cards }) {
   return (
-    <ul class="gallery">
+    <ul className={css.imageGallery}>
       {cards.map(({ id, webformatURL, largeImageURL }) => (
         <ImageGalleryItem webformatURL={webformatURL} />
       ))}
