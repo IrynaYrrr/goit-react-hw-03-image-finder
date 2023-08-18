@@ -4,6 +4,7 @@ import axios from "axios";
 import ImageGallery from './ImageGallery/ImageGallery';
 import Searchbar from './Searchbar/Searchbar';
 import Button from './Button/Button';
+import Loader from './Loader/Loader';
 
 
 const appStyles = {
@@ -28,7 +29,7 @@ export class App extends Component {
     return (
       <div style={appStyles}>
         <Searchbar />
-        {cards.length > 0 ? <ImageGallery cards={cards} /> : null}
+        {cards.length > 0 ? <ImageGallery cards={cards} /> : <Loader />}
         <Button />
       </div>
     );

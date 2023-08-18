@@ -10,7 +10,6 @@ export default function Loader() {
       color='green'
       ariaLabel='three-dots-loading'
       wrapperStyle
-      wrapperClass
     />
   )
 }

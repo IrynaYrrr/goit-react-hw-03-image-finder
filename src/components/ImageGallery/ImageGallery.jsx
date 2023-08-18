@@ -6,9 +6,8 @@ export default function ImageGallery({ cards }) {
   return (
     <ul className={css.imageGallery}>
       {cards.map(({ id, webformatURL, largeImageURL }) => (
-        <ImageGalleryItem webformatURL={webformatURL} />
+        <ImageGalleryItem  key={id} webformatURL={webformatURL} />
       ))}
-
     </ul>
   )
 }
