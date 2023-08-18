@@ -1,14 +1,19 @@
 import React from 'react';
 import css from "./Searchbar.module.css";
 
-// function onSubmit(){
 
-// }
 
 export default function Searchbar({onSubmit}) {
+
+  const handleSubmit = evt => {
+    evt.preventDefault();
+    const searchString = evt.target['1'].value
+    onSubmit(searchString)
+  };
+
   return (
     <header className={css.searchBar}>
-      <form className={css.searchForm}>
+      <form onSubmit={handleSubmit} className={css.searchForm}>
         <button type="submit" className={css.searchFormButton}>
           <span className={css.searchFormButtonLabel}>Search</span>
         </button>
@@ -17,6 +22,7 @@ export default function Searchbar({onSubmit}) {
           className={css.searchFormInput}
           type="text"
           autoComplete="off"
+          name="searchString"
           autoFocus
           placeholder="Search images and photos"
         />
