@@ -1,4 +1,3 @@
-// import Searchbar from './Searchbar/Searchbar';
 import React, { Component } from "react";
 import axios from "axios";
 import ImageGallery from './ImageGallery/ImageGallery';
@@ -26,19 +25,9 @@ export class App extends Component {
     this.setState(() => ({
       cards,
     }))
-    // const response = await axios.get(`https://pixabay.com/api/?q=${this.state.searchString}&page=1&key=36088783-799e53020b824ac98b477fb5a&image_type=photo&orientation=horizontal&per_page=12`);
-    // this.setState({ cards: response.data.hits });
   }
 
-
-  // async componentDidUpdate() {
-  //   const response = await axios.get(`https://pixabay.com/api/?q=${this.state.searchString}&page=${this.state.page}&key=36088783-799e53020b824ac98b477fb5a&image_type=photo&orientation=horizontal&per_page=12`);
-  //   this.setState({ cards: response.data.hits });
-  // }
-
-
-
-  handleSearchForm = async(searchString) => {
+  handleSearchForm = async (searchString) => {
     const page = 1;
     const cards = await this.getCards(searchString, page)
     this.setState(() => ({
@@ -46,7 +35,7 @@ export class App extends Component {
     }))
   }
 
-  loadMoreClick = async() => {
+  loadMoreClick = async () => {
     const page = this.state.page + 1;
     const cards = await this.getCards(this.state.searchString, page)
     this.setState((prev) => ({
