@@ -1,8 +1,6 @@
 import React from 'react';
 import css from "./Searchbar.module.css";
 
-
-
 export default function Searchbar({onSubmit}) {
 
   const handleSubmit = evt => {
