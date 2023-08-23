@@ -61,7 +61,7 @@ export class App extends Component {
     return (
       <div style={appStyles}>
         <Searchbar onSubmit={this.handleSearchForm} />
-        { <Loader />}
+        {isLoading && <Loader />}
         {searchString && <ImageGallery cards={cards} />}
         {searchString && totalImages > cards.length && <Button onClick={this.loadMoreClick} />}
       </div>
