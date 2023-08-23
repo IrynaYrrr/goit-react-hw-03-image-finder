@@ -1,10 +1,9 @@
 import React, { Component } from "react";
-import axios from "axios";
 import ImageGallery from './ImageGallery/ImageGallery';
 import Searchbar from './Searchbar/Searchbar';
 import Button from './Button/Button';
-import Loader from './Loader/Loader';
-
+// import Loader from './Loader/Loader';
+import { getCards } from 'services/api';
 
 const appStyles = {
   display: 'grid',
@@ -18,44 +17,47 @@ export class App extends Component {
     cards: [],
     searchString: '',
     page: 1,
+    isLoading: false,
+    error: null,
+    totalImages: 0
   };
 
-  async componentDidMount() {
-    const cards = await this.getCards(this.state.searchString, this.state.page)
-    this.setState(() => ({
-      cards,
-    }))
+  componentDidUpdate = async (_, prevState) => {
+    const { searchString, page } = this.state
+    if (page !== prevState.page || searchString !== prevState.searchString) {
+      const cards = await getCards(searchString, page);
+      this.setState(() => ({
+        cards,
+        searchString
+      }))
+    }
   }
+
 
   handleSearchForm = async (searchString) => {
-    const page = 1;
-    const cards = await this.getCards(searchString, page)
     this.setState(() => ({
-      cards, page, searchString
+      cards: [],
+      page: 1,
+      searchString
     }))
   }
+
 
   loadMoreClick = async () => {
-    const page = this.state.page + 1;
-    const cards = await this.getCards(this.state.searchString, page)
     this.setState((prev) => ({
-      page,
-      cards: [...prev.cards, ...cards]
+      page: prev + 1,
     }))
   }
 
-  async getCards(searchString, page) {
-    const response = await axios.get(`https://pixabay.com/api/?q=${searchString}&page=${page}&key=36088783-799e53020b824ac98b477fb5a&image_type=photo&orientation=horizontal&per_page=12`);
-    return response.data.hits;
-  }
+
 
   render() {
     const { cards } = this.state;
     return (
       <div style={appStyles}>
         <Searchbar onSubmit={this.handleSearchForm} />
-        {cards.length > 0 ? <ImageGallery cards={cards} /> : <Loader />}
-        <Button onClick={this.loadMoreClick} />
+        {this.searchString !== '' && <ImageGallery cards={cards} />}
+        {/* <Button onClick={this.loadMoreClick} /> */}
       </div>
     );
   }

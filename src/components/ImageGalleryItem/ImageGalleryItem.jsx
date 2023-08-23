@@ -8,8 +8,6 @@ export default class ImageGalleryItem extends Component {
     isShowModal: false
   };
 
-  componentDidUpdate(prevProps, prevState) { document.getElementById('modalDiv')?.focus() }
-
   handleModalClick = () => {
     this.setState((prev) => ({
       isShowModal: !prev.isShowModal
@@ -17,15 +15,26 @@ export default class ImageGalleryItem extends Component {
   }
 
   render() {
-    if (this.state.isShowModal) {
-      return (<Modal largeImageURL={this.props.largeImageURL} onClick={this.handleModalClick} />)
-    } else {
-      return (
-        <li className={css.imageGalleryItem} key={this.props.id} onClick={this.handleModalClick}>
-          <img className={css.imageGalleryItemImage} src={this.props.webformatURL} alt="webCard" />
-        </li>
-      )
-    }
+    const { isShowModal } = this.state;
+    const { webformatURL, largeImageURL, id } = this.props;
 
+    return (
+      <li
+        className={css.imageGalleryItem}
+        key={id}
+        onClick={this.handleModalClick}
+      >
+        <img
+          className={css.imageGalleryItemImage}
+          src={webformatURL}
+          alt="webCard"
+        />
+        {isShowModal && (
+          <Modal
+            largeImageURL={largeImageURL}
+            onClick={this.handleModalClick}
+          />)}
+      </li>
+    )
   }
 }
