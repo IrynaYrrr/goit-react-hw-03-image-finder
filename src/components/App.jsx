@@ -2,7 +2,7 @@ import React, { Component } from "react";
 import ImageGallery from './ImageGallery/ImageGallery';
 import Searchbar from './Searchbar/Searchbar';
 import Button from './Button/Button';
-// import Loader from './Loader/Loader';
+import Loader from './Loader/Loader';
 import { getCards } from 'services/api';
 
 const appStyles = {
@@ -25,16 +25,20 @@ export class App extends Component {
   componentDidUpdate = async (_, prevState) => {
     const { searchString, page } = this.state
     if (page !== prevState.page || searchString !== prevState.searchString) {
-      const cards = await getCards(searchString, page);
       this.setState(() => ({
-        cards,
-        searchString
+        isLoading: true
+      }))
+      const { hits, totalHits } = await getCards(searchString, page);
+      this.setState((prev) => ({
+        cards: [...prev.cards, ...hits],
+        isLoading: false,
+        totalImages: totalHits
       }))
     }
   }
 
 
-  handleSearchForm = async (searchString) => {
+  handleSearchForm = (searchString) => {
     this.setState(() => ({
       cards: [],
       page: 1,
@@ -43,21 +47,22 @@ export class App extends Component {
   }
 
 
-  loadMoreClick = async () => {
+  loadMoreClick = () => {
     this.setState((prev) => ({
-      page: prev + 1,
+      page: prev.page + 1,
     }))
   }
 
 
-
   render() {
-    const { cards } = this.state;
+    const { cards, isLoading, searchString, totalImages } = this.state;
+    console.log(totalImages, cards, searchString);
     return (
       <div style={appStyles}>
         <Searchbar onSubmit={this.handleSearchForm} />
-        {this.searchString !== '' && <ImageGallery cards={cards} />}
-        {/* <Button onClick={this.loadMoreClick} /> */}
+        {isLoading && <Loader />}
+        {searchString && <ImageGallery cards={cards} />}
+        {searchString && totalImages > cards.length && <Button onClick={this.loadMoreClick} />}
       </div>
     );
   }
