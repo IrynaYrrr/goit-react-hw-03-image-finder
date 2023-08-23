@@ -8,9 +8,16 @@ export default class ImageGalleryItem extends Component {
     isShowModal: false
   };
 
-  handleModalClick = () => {
-    this.setState((prev) => ({
-      isShowModal: !prev.isShowModal
+  handleModalOpen = () => {
+    this.setState(() => ({
+      isShowModal: true
+    }))
+  }
+
+
+  handleModalClose = () => {
+    this.setState(() => ({
+      isShowModal: false
     }))
   }
 
@@ -22,7 +29,7 @@ export default class ImageGalleryItem extends Component {
       <li
         className={css.imageGalleryItem}
         key={id}
-        onClick={this.handleModalClick}
+        onClick={this.handleModalOpen}
       >
         <img
           className={css.imageGalleryItemImage}
@@ -32,7 +39,7 @@ export default class ImageGalleryItem extends Component {
         {isShowModal && (
           <Modal
             largeImageURL={largeImageURL}
-            onClick={this.handleModalClick}
+            onClick={this.handleModalClose}
           />)}
       </li>
     )

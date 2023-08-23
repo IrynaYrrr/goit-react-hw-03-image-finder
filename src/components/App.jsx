@@ -55,12 +55,13 @@ export class App extends Component {
 
 
   render() {
+
     const { cards, isLoading, searchString, totalImages } = this.state;
-    console.log(totalImages, cards, searchString);
+
     return (
       <div style={appStyles}>
         <Searchbar onSubmit={this.handleSearchForm} />
-        {isLoading && <Loader />}
+        { <Loader />}
         {searchString && <ImageGallery cards={cards} />}
         {searchString && totalImages > cards.length && <Button onClick={this.loadMoreClick} />}
       </div>
