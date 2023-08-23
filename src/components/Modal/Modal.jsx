@@ -31,7 +31,7 @@ export default class Modal extends Component {
     return (
       <div className={css.overlay}>
         <div className={css.modal}>
-          <img src={largeImageURL} alt="largeCard" />
+          <img src={largeImageURL} alt="largeCard" className={css.overlayImg}/>
         </div>
       </div>
     )
