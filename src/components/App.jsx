@@ -28,12 +28,25 @@ export class App extends Component {
       this.setState(() => ({
         isLoading: true
       }))
-      const { hits, totalHits } = await getCards(searchString, page);
-      this.setState((prev) => ({
-        cards: [...prev.cards, ...hits],
-        isLoading: false,
-        totalImages: totalHits
-      }))
+
+      try {
+        const { hits, totalHits } = await getCards(searchString, page);
+        this.setState((prev) => ({
+          cards: [...prev.cards, ...hits],
+          error: null,
+          totalImages: totalHits
+        }))
+      } catch (error) {
+        this.setState(() => ({
+          error: error.message
+        }))
+      } finally {
+        this.setState(() => ({
+          isLoading: false
+        }))
+      }
+
+
     }
   }
 
@@ -56,12 +69,13 @@ export class App extends Component {
 
   render() {
 
-    const { cards, isLoading, searchString, totalImages } = this.state;
+    const { cards, isLoading, searchString, totalImages, error} = this.state;
 
     return (
       <div style={appStyles}>
         <Searchbar onSubmit={this.handleSearchForm} />
         {isLoading && <Loader />}
+        {error && <p>{error}</p>}
         {searchString && <ImageGallery cards={cards} />}
         {searchString && totalImages > cards.length && <Button onClick={this.loadMoreClick} />}
       </div>
